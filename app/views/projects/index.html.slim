@@ -1,0 +1,10 @@
+- content_for :title do
+  | #{site_name} | Project List
+
+h1 Project List
+
+ol
+    - Project.all.each do |project|
+        li
+            => link_to project.name, project_path(project.id)
+            | (#{project.status_tag})

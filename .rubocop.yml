@@ -1,0 +1,12 @@
+---
+inherit_gem: 
+  rubocop-rails-omakase: rubocop.yml
+
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-factory_bot
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.3.4

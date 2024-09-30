@@ -1,0 +1,36 @@
+/ TODO: maintain WCAG standards with essential markup
+- content_for :title do
+  | #{site_name} | #{project.name}
+
+h1 style="color: #{project.colour}" #{project.name} (#{project.status_tag})
+/ TODO: Replace inline styles with SASS and a design system
+  h1 class=[project.colour] #{project.name} (#{project.status_tag})
+
+= form_with(model: project, local: true) do |form|
+  = form.select :status, options_for_select(Project.statuses, selected: Project.statuses[project.status])
+  = form.submit 'Update'
+
+h2 Comments (#{project.comments.size})
+
+= form_with(model: [project, comment], local: true) do |form|
+  = form.text_area :body
+  / TODO: Replace hardcoded text using locales for consistency, mantainability and improved UX
+  = form.submit 'Post'
+
+/ TODO: extract elements to partials where appropriate for better organisation and reuse
+- if project.comments.any?
+  ul
+    - project.comments.each do |comment|
+      li
+        = comment.body
+        hr
+
+h2 Status Changes (#{project.data.size})
+
+- if project.data.any?
+  ol
+    - project.data.each do |state|
+      li
+        = I18n.t("status.#{state}")
+        hr
+
